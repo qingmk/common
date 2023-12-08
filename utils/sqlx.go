@@ -57,7 +57,7 @@ func GetUpdateSql(a any) (string, []interface{}) {
 		if reflect.Int64 == child().Kind() {
 			if fieldValue.Int() > 0 {
 				if tagVal != "id" {
-					setString = setString + tagVal + "= ?, "
+					setString = setString + tagVal + "= ?,"
 					values = append(values, fieldValue.Int())
 				}
 
