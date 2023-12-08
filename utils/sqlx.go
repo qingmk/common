@@ -49,7 +49,7 @@ func GetUpdateSql(a any) (string, []interface{}) {
 			if len(fieldValue.String()) > 0 {
 
 				setString = setString + tagVal + "= '?',"
-				values = append(values, fieldValue)
+				values = append(values, fieldValue.String())
 
 			}
 		}
