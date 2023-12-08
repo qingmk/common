@@ -1,5 +1,7 @@
 package errorx
 
+import "encoding/json"
+
 const ErrorCode = 500
 const SuccessCode = 200
 const SuccessMessage = "success"
@@ -35,4 +37,8 @@ func (e *CodeError) Data() *CodeErrorResponse {
 		Code:    e.Code,
 		Message: e.Message,
 	}
+}
+func (e *CodeError) JSON() string {
+	bytes, _ := json.Marshal(e)
+	return string(bytes)
 }
