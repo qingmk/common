@@ -3,6 +3,7 @@ package utils
 import (
 	"context"
 	"reflect"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -150,4 +151,31 @@ func GetQuerySql(a any) (string, []interface{}) {
 
 	return where, values
 
+}
+
+func WithLimit(where string, values []interface{}, pagesize int64, current int64) (string, []interface{}) {
+	where = where + " limit ?,?"
+
+	if pagesize == 0 {
+		pagesize = 10
+	}
+	if current == 0 {
+		current = 1
+	}
+	values = append(values, pagesize*(current-1))
+	values = append(values, pagesize)
+	return where, values
+}
+
+func ArrayConvert(ids []int64) (string, []interface{}) {
+	placeholders := make([]string, len(ids))
+	for i := range ids {
+		placeholders[i] = "?"
+	}
+	args := make([]interface{}, len(ids))
+	for i, id := range ids {
+		args[i] = id
+	}
+
+	return strings.Join(placeholders, ","), args
 }
