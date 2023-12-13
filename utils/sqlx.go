@@ -56,7 +56,7 @@ func GetUpdateSql(a any) (string, []interface{}) {
 		}
 
 		if reflect.Int64 == child().Kind() {
-			if fieldValue.Int() > 0 {
+			if fieldValue.Int() >= -99 {
 				if tagVal != "id" {
 					setString = setString + tagVal + "= ?,"
 					values = append(values, fieldValue.Int())
@@ -134,7 +134,7 @@ func GetQuerySql(a any) (string, []interface{}) {
 		if reflect.Int64 == child().Kind() {
 			if fieldValue.Int() > 0 {
 				if tagVal != "id" {
-					where = where + " and " + tagVal + "= ?,"
+					where = where + " and " + tagVal + "= ? "
 					values = append(values, fieldValue.Int())
 				}
 
