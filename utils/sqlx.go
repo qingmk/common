@@ -130,7 +130,7 @@ func GetInsertSql(a any) (string, string, []interface{}) {
 		if reflect.String == child().Kind() {
 			if len(fieldValue.String()) > 0 {
 				rows = rows + tagVal + ","
-				setString = setString + "= ?,"
+				setString = setString + "?,"
 				values = append(values, fieldValue.String())
 
 			}
@@ -140,7 +140,7 @@ func GetInsertSql(a any) (string, string, []interface{}) {
 			if fieldValue.Int() >= -99 {
 				if tagVal != "id" {
 					rows = rows + tagVal + ","
-					setString = setString + "= ?,"
+					setString = setString + " ?,"
 					values = append(values, fieldValue.Int())
 				}
 
@@ -150,7 +150,7 @@ func GetInsertSql(a any) (string, string, []interface{}) {
 
 		if reflect.Bool == child().Kind() {
 			rows = rows + tagVal + ","
-			setString = setString + "= ?,"
+			setString = setString + "?,"
 			if fieldValue.Bool() {
 
 				values = append(values, 1)
