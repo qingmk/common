@@ -16,6 +16,17 @@ type CodeErrorResponse struct {
 	Message string `json:"message"`
 }
 
+type CodeErrorResponseWithData struct {
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+type CodeErrorWithData struct {
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
 func NewCodeError(code int, msg string) error {
 	return &CodeError{Code: code, Message: msg}
 }
@@ -41,4 +52,11 @@ func (e *CodeError) Data() *CodeErrorResponse {
 func (e *CodeError) JSON() string {
 	bytes, _ := json.Marshal(e)
 	return string(bytes)
+}
+func (e *CodeErrorWithData) DataV2() *CodeErrorResponseWithData {
+	return &CodeErrorResponseWithData{
+		Code:    e.Code,
+		Message: e.Message,
+		Data:    e.Data,
+	}
 }
