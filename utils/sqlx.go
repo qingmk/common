@@ -66,6 +66,16 @@ func GetUpdateSql(a any) (string, []interface{}) {
 
 		}
 
+		if reflect.Bool == child().Kind() {
+			if fieldValue.Bool() {
+				setString = setString + tagVal + "= ?,"
+				values = append(values, 1)
+			} else if !fieldValue.Bool() {
+				setString = setString + tagVal + "= ?,"
+				values = append(values, 0)
+			}
+		}
+
 		//结构体不处理？但是sqlNullString怎么办？
 		/**if reflect.Struct == child().Kind() {
 
@@ -140,6 +150,15 @@ func GetQuerySql(a any) (string, []interface{}) {
 
 			}
 
+		}
+		if reflect.Bool == child().Kind() {
+			if fieldValue.Bool() {
+				where = where + " and " + tagVal + "= ?"
+				values = append(values, 1)
+			} else if !fieldValue.Bool() {
+				where = where + " and " + tagVal + "= ?"
+				values = append(values, 0)
+			}
 		}
 
 		//结构体不处理？但是sqlNullString怎么办？
