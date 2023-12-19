@@ -88,9 +88,10 @@ func GetUpdateSql(a any) (string, []interface{}) {
 
 }
 
-func GetInsertSql(a any) (string, []interface{}) {
+func GetInsertSql(a any) (string, string, []interface{}) {
 
-	var setString = "values ( "
+	var setString = "values ("
+	var rows = ""
 	var values []interface{}
 	typ := reflect.TypeOf(a)
 	val := reflect.ValueOf(a) //获取reflect.Type类型
@@ -104,7 +105,7 @@ func GetInsertSql(a any) (string, []interface{}) {
 	if kd != reflect.Struct {
 		//fmt.Println("expect struct")
 		logx.WithContext(context.Background()).Error("错误的类型,%s", kd.String())
-		return setString, nil
+		return setString, rows, nil
 	}
 	//获取到该结构体有几个字段
 	num := val.NumField()
@@ -128,8 +129,8 @@ func GetInsertSql(a any) (string, []interface{}) {
 
 		if reflect.String == child().Kind() {
 			if len(fieldValue.String()) > 0 {
-
-				setString = setString + tagVal + "= ?,"
+				rows = rows + tagVal + ","
+				setString = setString + "= ?,"
 				values = append(values, fieldValue.String())
 
 			}
@@ -138,7 +139,8 @@ func GetInsertSql(a any) (string, []interface{}) {
 		if reflect.Int64 == child().Kind() {
 			if fieldValue.Int() >= -99 {
 				if tagVal != "id" {
-					setString = setString + tagVal + "= ?,"
+					rows = rows + tagVal + ","
+					setString = setString + "= ?,"
 					values = append(values, fieldValue.Int())
 				}
 
@@ -147,11 +149,13 @@ func GetInsertSql(a any) (string, []interface{}) {
 		}
 
 		if reflect.Bool == child().Kind() {
+			rows = rows + tagVal + ","
+			setString = setString + "= ?,"
 			if fieldValue.Bool() {
-				setString = setString + tagVal + "= ?,"
+
 				values = append(values, 1)
 			} else if !fieldValue.Bool() {
-				setString = setString + tagVal + "= ?,"
+
 				values = append(values, 0)
 			}
 		}
@@ -164,8 +168,9 @@ func GetInsertSql(a any) (string, []interface{}) {
 	}
 
 	setString = setString[0 : len(setString)-1]
+	rows = rows[0 : len(rows)-1]
 	setString = setString + ")"
-	return setString, values
+	return setString, rows, values
 
 }
 
