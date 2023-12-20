@@ -31,6 +31,11 @@ func NewCodeError(code int, msg string) error {
 	return &CodeError{Code: code, Message: msg}
 }
 
+func NewCodeErrorWithData(code int, msg string, data interface{}) error {
+	error := &CodeErrorWithData{Code: code, Message: msg, Data: data}
+	return error
+}
+
 func NewDefaultError(msg string) error {
 	return NewCodeError(ErrorCode, msg)
 }
@@ -40,6 +45,10 @@ func NewSuccessTip() error {
 }
 
 func (e *CodeError) Error() string {
+	return e.Message
+}
+
+func (e *CodeErrorWithData) Error() string {
 	return e.Message
 }
 
