@@ -1,11 +1,9 @@
 package deleteFlag
 
-type DeleteflagType int
-
 const (
 	//正常的状态
-	Normal DeleteflagType = 1
+	Normal int64 = 1
 
 	//删除的状态
-	Deleted DeleteflagType = 2
+	Deleted int64 = 2
 )

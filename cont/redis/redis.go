@@ -1,8 +1,7 @@
 package redisEnum
 
-type RedisConst string
-
 const (
-	Namespace RedisConst = "basicinfo.ytxb.com"
-	
+	Namespace string = "basicinfo.ytxb.com"
+	USERROLE  string = "USERROLE"
+	USERINFO  string = "USERINFO"
 )
