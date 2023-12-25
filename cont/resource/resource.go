@@ -6,9 +6,10 @@ const (
 	MENUID int64 = 2
 	//资源类型的api的id
 	APIID int64 = 3
-
+	//资源类型的命名空间id
 	NAMESPACEID int64 = 4
-
+	//资源类型的资源类型id
+	RESOURCETYPEID int64 = 5
 	//规则类型中的角色
 	TYPEROLE int64 = 1
 	//规则类型中的用户
@@ -22,4 +23,5 @@ const (
 	APINAME        string = "API"
 	NAMESPACE      string = "NAMESPACE"
 	DEFAULTOPERATE string = "HAS"
+	RESOURCETYPE   string = "RESOURCETYPE"
 )
