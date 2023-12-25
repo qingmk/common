@@ -6,6 +6,9 @@ const (
 	MENUID int64 = 2
 	//资源类型的api的id
 	APIID int64 = 3
+
+	NAMESPACEID int64 = 4
+
 	//规则类型中的角色
 	TYPEROLE int64 = 1
 	//规则类型中的用户
@@ -14,7 +17,9 @@ const (
 )
 
 const (
-	MENUOPERATE string = "HAS"
-	MENUNAME    string = "MENU"
-	APINAME     string = "API"
+	MENUOPERATE    string = "HAS"
+	MENUNAME       string = "MENU"
+	APINAME        string = "API"
+	NAMESPACE      string = "NAMESPACE"
+	DEFAULTOPERATE string = "HAS"
 )
