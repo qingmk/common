@@ -4,8 +4,8 @@ go 1.21.3
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/mojocn/base64Captcha v1.3.6
-	github.com/redis/go-redis/v9 v9.3.1
+	github.com/mojocn/base64Captcha v1.3.5
+	github.com/redis/go-redis/v9 v9.3.0
 	github.com/zeromicro/go-zero v1.6.0
 	go.uber.org/zap v1.24.0
 	golang.org/x/crypto v0.14.0
