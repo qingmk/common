@@ -13,8 +13,10 @@ const (
 	//规则类型中的角色
 	TYPEROLE int64 = 1
 	//规则类型中的用户
-	TYPEUSER           int64 = 2
+	TYPEUSER int64 = 2
+	//默认的命名空间
 	DEFAULTNAMESPACEID int64 = 10
+	ADMINROLEID        int64 = 13
 )
 
 const (

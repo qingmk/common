@@ -9,3 +9,7 @@ func ContainsGeneric[T comparable](slice []T, element T) bool {
 
 	return false
 }
+
+func IsAdmin(roleIdList []int64, roleId int64) bool {
+	return ContainsGeneric(roleIdList, roleId)
+}
