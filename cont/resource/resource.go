@@ -21,12 +21,14 @@ const (
 )
 
 const (
-	MENUOPERATE    string = "HAS"
-	MENUNAME       string = "MENU"
-	APINAME        string = "API"
-	NAMESPACE      string = "NAMESPACE"
-	DEFAULTOPERATE string = "HAS"
-	RESOURCETYPE   string = "RESOURCETYPE"
-	TYPEUSERNAME   string = "用户"
-	TYPEROLENAME   string = "角色"
+	MENUOPERATE     string = "HAS"
+	MENUNAME        string = "MENU"
+	APINAME         string = "API"
+	NAMESPACE       string = "NAMESPACE"
+	DEFAULTOPERATE  string = "HAS"
+	RESOURCETYPE    string = "RESOURCETYPE"
+	TYPEUSERNAME    string = "用户"
+	TYPEROLENAME    string = "角色"
+	DEFAULTPASSWORD string = "123456"
+	DEFAULTSTRING   string = "admin"
 )
