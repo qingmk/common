@@ -17,6 +17,7 @@ const (
 	//默认的命名空间
 	DEFAULTNAMESPACEID int64 = 10
 	ADMINROLEID        int64 = 13
+	DEFAULTMANAGE      int64 = 25
 )
 
 const (
@@ -26,4 +27,6 @@ const (
 	NAMESPACE      string = "NAMESPACE"
 	DEFAULTOPERATE string = "HAS"
 	RESOURCETYPE   string = "RESOURCETYPE"
+	TYPEUSERNAME   string = "用户"
+	TYPEROLENAME   string = "角色"
 )
