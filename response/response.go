@@ -8,9 +8,9 @@ import (
 
 type (
 	Response struct {
-		Code int64     `json:"code"`
-		Msg  string    `json:"msg"`
-		Data ReloadRes `json:"data"`
+		Code    int64     `json:"code"`
+		Message string    `json:"message"`
+		Data    ReloadRes `json:"data"`
 	}
 
 	ReloadRes struct {
@@ -24,9 +24,9 @@ func JwtUnauthorizedResult(w http.ResponseWriter, r *http.Request, err error) {
 	}
 	resRet := &Response{
 
-		Code: 401,
-		Msg:  "您的帐户异地登陆或令牌失效",
-		Data: *res,
+		Code:    401,
+		Message: "您的帐户异地登陆或令牌失效",
+		Data:    *res,
 	}
 	httpx.WriteJson(w, http.StatusOK, resRet)
 }
