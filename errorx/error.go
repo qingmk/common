@@ -1,6 +1,10 @@
 package errorx
 
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"google.golang.org/grpc/status"
+)
 
 const ErrorCode = 500
 const SuccessCode = 200
@@ -68,4 +72,12 @@ func (e *CodeErrorWithData) DataV2() *CodeErrorResponseWithData {
 		Message: e.Message,
 		Data:    e.Data,
 	}
+}
+
+func (e *CodeError) RpcError(msg string) error {
+
+	err := NewDefaultError(msg)
+	bytes, _ := json.Marshal(err)
+	status := status.New(SuccessCode, string(bytes))
+	return status.Err()
 }
