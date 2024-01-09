@@ -74,7 +74,7 @@ func (e *CodeErrorWithData) DataV2() *CodeErrorResponseWithData {
 	}
 }
 
-func (e *CodeError) RpcError(msg string) error {
+func RpcError(msg string) error {
 
 	err := NewDefaultError(msg)
 	bytes, _ := json.Marshal(err)
