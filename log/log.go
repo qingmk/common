@@ -35,13 +35,16 @@ func NewLoggerV2(Brokers []string, Topic string, Node string, Service string) *L
 
 	KafkaService := service.NewKafkaServiceV2(Brokers)
 
-	return &Logger{
+	logger := &Logger{
 		KafkaService: KafkaService,
 		MsgChan:      make(chan dto.LogMsg, 1000),
 		Topic:        Topic,
 		Node:         Node,
 		Service:      Service,
 	}
+
+	logger.ReadLog()
+	return logger
 }
 
 func (logger *Logger) ReceiveLog(message dto.LogMsg) (err error) {
@@ -62,7 +65,6 @@ func (logger *Logger) ReadLog() (err error) {
 	}**/
 
 	for c := range logger.MsgChan {
-		//fmt.Println(c)
 		bytes, _ := json.Marshal(c)
 		logger.KafkaService.SendKafkaMessage(logger.Topic, string(bytes))
 	}
