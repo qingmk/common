@@ -43,7 +43,7 @@ func NewLoggerV2(Brokers []string, Topic string, Node string, Service string) *L
 		Service:      Service,
 	}
 
-	logger.ReadLog()
+	go logger.ReadLog()
 	return logger
 }
 
