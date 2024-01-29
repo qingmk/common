@@ -17,6 +17,7 @@ type Logger struct {
 	MsgChan        chan dto.LogMsg
 	Topic          string
 	Node           string //节点名称
+	NameSpaceId    int64
 	Service        string //那个服务发送的信息
 	KqPusherClient *kq.Pusher
 }
@@ -62,6 +63,20 @@ func NewLoggerV3(Node string, Service string, KqPusherClient *kq.Pusher) *Logger
 	return logger
 }
 
+func NewLoggerV4(Node string, Service string, NameSpaceId int64, KqPusherClient *kq.Pusher) *Logger {
+
+	logger := &Logger{
+		MsgChan:        make(chan dto.LogMsg, 1000),
+		KqPusherClient: KqPusherClient,
+		Node:           Node,
+		Service:        Service,
+		NameSpaceId:    NameSpaceId,
+	}
+
+	go logger.ReadLogV3()
+	return logger
+}
+
 func (logger *Logger) ReceiveLog(message dto.LogMsg) (err error) {
 	logger.MsgChan <- message
 	return
@@ -89,11 +104,12 @@ func (logger *Logger) ReadLogV2() (err error) {
 
 func (logger *Logger) Error(mgs string) (err error) {
 	message := dto.LogMsg{
-		Service: logger.Service,
-		Msg:     mgs,
-		Level:   log.ERROR,
-		Node:    logger.Node,
-		Time:    time.Now().Format("2006-01-02 15:04:05"),
+		Service:     logger.Service,
+		Msg:         mgs,
+		Level:       log.ERROR,
+		Node:        logger.Node,
+		NameSpaceId: logger.NameSpaceId,
+		Time:        time.Now().Format("2006-01-02 15:04:05"),
 	}
 	logger.MsgChan <- message
 	return
@@ -101,11 +117,12 @@ func (logger *Logger) Error(mgs string) (err error) {
 
 func (logger *Logger) Warn(mgs string) (err error) {
 	message := dto.LogMsg{
-		Service: logger.Service,
-		Msg:     mgs,
-		Level:   log.WARN,
-		Node:    logger.Node,
-		Time:    time.Now().Format("2006-01-02 15:04:05"),
+		Service:     logger.Service,
+		Msg:         mgs,
+		Level:       log.WARN,
+		Node:        logger.Node,
+		NameSpaceId: logger.NameSpaceId,
+		Time:        time.Now().Format("2006-01-02 15:04:05"),
 	}
 	logger.MsgChan <- message
 	return
@@ -113,11 +130,51 @@ func (logger *Logger) Warn(mgs string) (err error) {
 
 func (logger *Logger) INFO(mgs string) (err error) {
 	message := dto.LogMsg{
-		Service: logger.Service,
-		Msg:     mgs,
-		Level:   log.INFO,
-		Node:    logger.Node,
-		Time:    time.Now().Format("2006-01-02 15:04:05"),
+		Service:     logger.Service,
+		Msg:         mgs,
+		Level:       log.INFO,
+		Node:        logger.Node,
+		NameSpaceId: logger.NameSpaceId,
+		Time:        time.Now().Format("2006-01-02 15:04:05"),
+	}
+	logger.MsgChan <- message
+	return
+}
+
+func (logger *Logger) ErrorWithNameSpaceId(mgs string, NameSpaceId int64) (err error) {
+	message := dto.LogMsg{
+		Service:     logger.Service,
+		Msg:         mgs,
+		Level:       log.ERROR,
+		Node:        logger.Node,
+		NameSpaceId: NameSpaceId,
+		Time:        time.Now().Format("2006-01-02 15:04:05"),
+	}
+	logger.MsgChan <- message
+	return
+}
+
+func (logger *Logger) WarnWithNameSpaceId(mgs string, NameSpaceId int64) (err error) {
+	message := dto.LogMsg{
+		Service:     logger.Service,
+		Msg:         mgs,
+		Level:       log.WARN,
+		Node:        logger.Node,
+		NameSpaceId: NameSpaceId,
+		Time:        time.Now().Format("2006-01-02 15:04:05"),
+	}
+	logger.MsgChan <- message
+	return
+}
+
+func (logger *Logger) INFOWithNameSpaceId(mgs string, NameSpaceId int64) (err error) {
+	message := dto.LogMsg{
+		Service:     logger.Service,
+		Msg:         mgs,
+		Level:       log.INFO,
+		Node:        logger.Node,
+		NameSpaceId: NameSpaceId,
+		Time:        time.Now().Format("2006-01-02 15:04:05"),
 	}
 	logger.MsgChan <- message
 	return
